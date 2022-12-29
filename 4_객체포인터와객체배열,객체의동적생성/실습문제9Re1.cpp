@@ -19,43 +19,38 @@ public:
 
 
 int main() {
-	string s;
-	Person* p = new Person[3];
-	int findex;
-	string name, tel, searchN;
-
+	Person *p = new Person[3];
+	string str;
+	string searchN;
 
 	cout << "이름과 전화 번호를 입력해 주세요" << endl;
 
 	for(unsigned short i=0; i<3; i++) {
-		cout << "사람 " << i + 1 << ">> ";
-		getline(cin, s, '\n');
+		string name, tel;
+		int findex;
 
-		findex = s.find(' ', 0); // 공백자 인덱스
+		cout << "사람 " << i+1 << ">> ";
+		getline(cin, str, '\n');
 
-		name = s.substr(0, findex);
-		tel = s.substr(findex+1, s.length());
+		findex = str.find(' ', 0); // 공백자 인덱스
 
+		name = str.substr(0, findex);
+		tel = str.substr(findex+1, str.length());
 		p[i].set(name, tel);
 	}
 
-
 	cout << "모든 사람의 이름은 ";
+	for(unsigned short i=0; i<3; i++) cout << p[i].getName() << " ";
 
-	for (unsigned short i = 0; i < 3; i++) cout << p[i].getName() << ' ';
-	
 	cout << "\n전화번호 검색합니다. 이름을 입력하세요>>";
+	cin >> searchN; // 빈칸 없이 입력
 
-	cin >> searchN;
-
-	for (unsigned short i = 0; i < 3; i++) {
-		string tmpName = p[i].getName();
-
-		if (tmpName == searchN) {
-			cout << "전화 번호는 " << p[i].getTel() << endl;
+	for(unsigned short i=0; i<3; i++) {
+		if(p[i].getName() == searchN) {
+			cout << "전화 번호는 " << p[i].getTel();
 			break;
 		}
-	}
+	} // for end
 
 	delete[] p;
-}
+} // main end
