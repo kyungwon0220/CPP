@@ -1,19 +1,19 @@
-#ifndef METHOD
-#define METHOD
-
 #include <iostream>
 
 template <typename T> T Factorial(T x) {
-	T A = 1;
+	T a = 1;
 
-	for(unsigned short i=1; i<=x; i++) A *= i;
+	for (unsigned short i = 1;i <= x;i++) a *= i;
 
-	return A;
+	return a;
 }
 
-#else // 재귀 함수
-template <typename T> T Factorial(T x) {
-	if(x<=1) return 1;
-	x *= Factorial(x-1);
+
+// 재귀 함수
+template <typename T> T Factorial_Recursion(T x) {
+	if (x<=1) {
+		return 1;
+	} else {
+		return x *= Factorial_Recursion(x-1);
+	}
 }
-#endif

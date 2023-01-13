@@ -1,5 +1,5 @@
 #include "Test1Class.h"
-
+#include <iostream>
 
 int main() {
     int x = 55;
@@ -9,15 +9,15 @@ int main() {
 
     std::cout << t1->getX() << std::endl;
 
-
     std::cout << "Input New X: ";
     std::cin >> x2;
     t2->setX(x2);
     std::cout << t2->getX() << std::endl;
 
-    t1 = nullptr;
-    t2 = nullptr;
     delete t1;
     delete t2;
+    t1 = nullptr;
+    t2 = nullptr;
+    
     return 0;
 }

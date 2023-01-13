@@ -5,12 +5,30 @@
 #include "Assignment02.a.01.h"
 
 int main() {
-    int x;
+    unsigned long x;
 
     std::cout << "Input number: ";
     std::cin >> x;
 
-    std::cout << "Factorial of " << x << " is " << Factorial(x) << std::endl;
+    if (x > 20) {
+        std::cout << "ERR:too Big" << std::endl;
+    } else if (x == 0) {
+        std::cout << "ERR:x=0" << std::endl;
+    } else {
+        std::cout << "Factorial of " << x << " is " << Factorial(x) << std::endl;
+    }
+    
+    std::cout << std::endl << "* Factorial() Recursion *" << std::endl;
+    std::cout << "Input number: ";
+    std::cin >> x;
 
+    if (x > 20) {
+        std::cout << "ERR:too Big" << std::endl;
+    } else if (x == 0) {
+        std::cout << "ERR:x=0" << std::endl;
+    } else {
+        std::cout << "Factorial of " << x << " is " << Factorial_Recursion(x) << std::endl;
+    }
+    
     return 0;
 }
