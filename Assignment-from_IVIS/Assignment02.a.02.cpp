@@ -1,23 +1,32 @@
-// Create C++ application that takes binary number as an input and prints it in decimal and hex.
-// 이진수를 입력으로 받아 십진수와 16진수로 인쇄하는 C++ 애플리케이션을 만듭니다.
-
-
 #include <iostream>
 #include <string>
 #include <cmath>
 
-using namespace std;
-
 int main() {
-    string s;
-    int dec = 0;
-
-    cout << "Input binary number: ";
-    cin >> s;
-
-    for(int i=s.length(); i>0; i--) {
-        if(s[i-1] == '1') dec += pow(2, s.length()-i);
-    }
-    cout << "Decimal: " << dec << endl << "Hexadecimal: " << std::hex << dec << endl;
+    unsigned long long dec = 0;
+    std::string s;
     
+    std::cout << "Input binary number: ";
+    std::getline(std::cin, s);
+
+    for (unsigned short i = 0; i < s.length(); i++) {
+        if ((s[i] != '0') && (s[i] != '1')) {
+            std::cout << "ERR : Not Binary!" << std::endl;
+            exit(1);
+        }
+    }
+
+    if (s.length() >= 53) {
+        std::cout << "ERR : 범위 ERR(52자리까지만 정상 작동하게 설계되었습니다 :)" << std::endl;
+        exit(1);
+    }
+    
+    for (int i = s.length(); i >= 0; --i) {
+        if (s[i-1] == '1') {
+            dec += pow(2, s.length()-i);
+        }
+    }
+    std::cout << "Decimal: " << std::dec << dec << std::endl << "Hexadecimal: " << std::hex << dec << std::endl << std::endl;
+
+    return 0;
 }
