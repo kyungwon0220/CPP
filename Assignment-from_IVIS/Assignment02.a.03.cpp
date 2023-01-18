@@ -1,22 +1,21 @@
-// Write a C++ program to count all the words in a string provided by user.
-// 사용자가 제공한 문자열의 모든 단어를 세는 C++ 프로그램을 작성하십시오.
-
-
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 int main() {
-    string s;
-    unsigned short count = 1;
+    std::string s;
+    unsigned short count = 0;
 
-    cout << "Input string: ";
-    getline(cin, s);
+    std::cout << "Input string: ";
+    getline(std::cin, s);
 
-    for(unsigned short i=0; i<s.length(); i++)
-        if(s[i] == ' ') count++;
-    
-    cout << "number of words: " << count << endl;
+    if((s[0] != ' ') && (s[0] != '\0')) {
+        count++;
+    }
 
+    for (unsigned short i = 1; i < s.length(); ++i) {
+	    if ((s[i-1] == ' ') && (s[i] != ' ')) {
+            count++;
+        }
+    }
+    std::cout << "number of words: " << count << std::endl;
 }
