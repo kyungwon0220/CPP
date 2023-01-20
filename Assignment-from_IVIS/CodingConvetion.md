@@ -43,6 +43,11 @@
       void testX(int y); // void testX(int &y);
 > int 초과부터는 call by reference
 > bool, int 자료형은 reference의 이점이 없어서 ' & ' 참조를 일부러 붙이지는 않는다 ( call by reference 시, 어차피 int의 주소가 불림. 즉, 32비트 시스템의 주소  4byte == int 값의 크기와 같아지기 때문
+      void testY(std::string& val);
+> 불필요한 복사를 방지하기 위해 call by reference
+      unsigned short x;
+> Hyundai 주관 프로젝트 기준으로 변수는 소문자 시작 ( 확정된 define이나 enum 등 값이 정해진 variant 에서는 대문자 시작으로 사용하고 있습니다
+> const 값이나, define 정해진 값만 대문자로 쓰는 것을 기본 정책으로 합니다
   private:
       ..
   }
@@ -51,7 +56,7 @@
 > 생성자 함수 내부보다, 초기화 리스트 선호
 
 
-- const 값이나, define 정해진 값만 대문자로 쓰는 것을 기본 정책으로 합니다
+- 2회 이상 재사용시 함수화
 
 
 - ERR Log
