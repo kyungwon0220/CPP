@@ -39,9 +39,13 @@ int main() {
     testS1.insert(0, 3, 'A');
     testS1.println();
     testS1.insert(18, "XXXXX");
-    testS1.println();
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    testS1.insert(1, 3, "fffff");
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
     testS1.insert(5, testS1);
-    testS1.println();
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    testS1.insert(5, testS4, 6, 3);
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
 
 
     std::cout << std::endl << std::endl << "at, [] Test**********" << std::endl;
@@ -93,23 +97,24 @@ int main() {
     std::cout << "test3:" << testS3 << ", len:" << testS3.getLength() << std::endl;
 
 
-    // for(int i=0; i<testS3.getLength(); i++) std::cout << *(testS3.getString() + i) << std::endl;
     std::cout << std::endl << std::endl << "replace() Test**********" << std::endl;
     testS1.println();
     testS1.replace(5, 5, 10, 'Q');
+    testS1.println();
+    testS1.replace(5, 20, test1);
+    testS1.println();
+    testS1.replace(3, 10, test2, 5);
     std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
-    // testS1.replace(5, 20, test1);
-    // testS1.println();
-    // testS1.replace(10, 6, test1,7);
-    // testS1.println();
-    // testS1.replace(5, 9, testS2);
-    // testS1.println();
-    // testS1.replace(1, 13, testS3, 4, 3);
-    // testS1.println();  
+    testS1.replace(1, 9, test2, 5, 5);
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    testS1.replace(2, 10, testS2);
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    testS1.replace(1, 10, testS3, 4, 3);
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
 
 
     std::cout << std::endl << std::endl << "substr Test**********" << std::endl;
-    testS4 = testS1.substr(3, 10);
+    testS4 = testS1.substr(3, 5);
     testS4.println();
 
 

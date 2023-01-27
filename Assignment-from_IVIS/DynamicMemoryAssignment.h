@@ -26,13 +26,13 @@ public:
     void insert(const unsigned short index, const char c);
     void insert(const unsigned short index, const unsigned short count, const char c);
     void insert(const unsigned short index, const char* str);
-    // void insert(const unsigned short index, const unsigned short count, const char* str);
+    void insert(const unsigned short index, const unsigned short count, const char* str);
     void insert(const unsigned short index, MyString& str);
-    // insert(size_type index, const basic_string& str, size_type index_str, size_type count = npos);
+    void insert(const unsigned short index1, MyString& str, const unsigned short index2, const unsigned short count);
 
     void append(const char c, const unsigned short count);
     void append(const char *str);
-    // void append(const char *str, const unsigned short count);
+    void append(const char *str, const unsigned short count);
     void append(const char *str, const unsigned short index, const unsigned short count);
     void append(const MyString& str);
     void append(const MyString& str, const unsigned short index, const unsigned short count);
@@ -40,7 +40,7 @@ public:
     void replace(const unsigned short index, const unsigned short count1, const unsigned short count2, const char c);
     void replace(const unsigned short index, const unsigned short count, const char* str);
     void replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2);
-    // void replace(const unsigned short index1, const unsigned short len1, const char* str, const unsigned short index2, const unsigned short len2);
+    void replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2);
     void replace(const unsigned short index, const unsigned short count, MyString& str);
     void replace(const unsigned short index1, const unsigned short count1, MyString& str, const unsigned short index2, const unsigned short count2);
 
@@ -51,9 +51,7 @@ public:
     void assign(const MyString& str, const unsigned short index, const unsigned short count);
 
     const short compare(const char* str);
-    // const short compare(const char* str, const unsigned short index, const unsigned short len);
     const short compare(const MyString& str);
-    // const short compare(const MyString& str, const unsigned short index, const unsigned short len);
 
     const char at(const unsigned short i);
     const char operator[] (const unsigned short i);
@@ -62,8 +60,6 @@ public:
     MyString& operator=(const MyString& str);
     MyString& operator+=(const char* str);
     MyString& operator+=(const MyString& str);
-    // MyString& operator+(const char* str);
-    // MyString& operator+(const MyString& str);
 
     friend std::ostream& operator<<(std::ostream& out, const MyString& inputPstr) {
         out << inputPstr.pstr;

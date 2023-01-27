@@ -33,6 +33,12 @@
 
 - void assign(const MyString& str, const unsigned short index, const unsigned short count);
 
--
 
-// 전체 미완성. 
+필요시 구현할 예정 Memo
+- const short compare(const char* str, const unsigned short index, const unsigned short len);
+
+- const short compare(const MyString& str, const unsigned short index, const unsigned short len);
+
+- MyString& operator+(const char* str);
+
+- MyString& operator+(const MyString& str);

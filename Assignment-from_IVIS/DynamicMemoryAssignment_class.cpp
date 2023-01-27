@@ -204,13 +204,34 @@ void MyString::insert(const unsigned short index, const char* str) {
     }
 }
 
-// void MyString::insert(const unsigned short index, const unsigned short count, const char* str) {
-//     if(index <= this->length) {
-//     } else {
-//         std::cout << "ERR: not found index" << std::endl;
-//         exit(1);
-//     }
-// }
+void MyString::insert(const unsigned short index, const unsigned short count, const char* str) {
+    if (index > this->length) {
+        std::cout << "ERR: not found index" << std::endl;
+        exit(1);
+    } else if (count > MyLength(str)) {
+        std::cout << "ERR: 삽입하고 싶은 문자열의 길이 초과(count" << std::endl;
+        exit(1);
+    } else {
+        char *tmp = new char[this->length + count + 1];
+        
+        for (unsigned short i = 0; i < index; ++i) {
+            tmp[i] = this->pstr[i];
+        }
+
+        for (unsigned short i = 0; i < count; ++i) {
+            tmp[index + i] = str[i];
+        }
+
+        for (unsigned short i = index; i < this->length; ++i) {
+            tmp[i + count] = this->pstr[i];
+        }
+        tmp[this->length + count] = '\0';
+
+        delete[] this->pstr;
+        this->pstr = tmp;
+        this->length += count;
+    }
+}
 
 void MyString::insert(const unsigned short index, MyString& str) {
     if (index <= this->length) {
@@ -236,6 +257,38 @@ void MyString::insert(const unsigned short index, MyString& str) {
     } else {
         std::cout << "ERR: not found index" << std::endl;
         exit(1);
+    }
+}
+
+void MyString::insert(const unsigned short index1, MyString& str, const unsigned short index2, const unsigned short count) {
+    if (index1 > this->length) {
+        std::cout << "ERR: not found index" << std::endl;
+        exit(1);
+    } else if (index2 > str.getLength()) {
+        std::cout << "ERR: not found index(&str" << std::endl;
+        exit(1);
+    } else if (count > str.getLength()) {
+        std::cout << "ERR: 치환 가능한 길이가, 입력한 문자열의 길이보다 작습니다(count" << std::endl;
+        exit(1);
+    } else {
+        char *tmp = new char[this->length + count + 1];
+        
+        for (unsigned short i = 0; i < index1; ++i) {
+            tmp[i] = this->pstr[i];
+        }
+
+        for (unsigned short i = 0; i < count; ++i) {
+            tmp[index1 + i] = str[index2 + i];
+        }
+
+        for (unsigned short i = index1; i < this->length; ++i) {
+            tmp[count + i] = this->pstr[i];
+        }
+        tmp[this->length + count] = '\0';
+
+        delete[] this->pstr;
+        this->pstr = tmp;
+        this->length += count;
     }
 }
 
@@ -276,10 +329,27 @@ void MyString::append(const char *str) {
      this->length += inputLen;
 }
 
-// void MyString::append(const char *str, const unsigned short count) {
-//     if (count > 0) {
-//     }
-// }
+void MyString::append(const char *str, const unsigned short count) {
+    if (count > MyLength(str)) {
+        std::cout << "ERR: 치환 가능한 길이가, 입력한 문자열의 길이보다 작습니다(count" << std::endl;
+        exit(1);
+    } else {
+        char *tmp = new char[this->length + count + 1];
+        
+        for (unsigned short i = 0; i < this->length; ++i) {
+            tmp[i] = this->pstr[i];
+        }
+        
+        for (unsigned short i = 0; i < count; ++i) {
+            tmp[this->length + i] = str[i];
+        }
+        tmp[this->length + count] = '\0';
+
+        delete[] this->pstr;
+        this->pstr = tmp;
+        this->length += count;
+    }
+}
 
 void MyString::append(const char *str, const unsigned short index, const unsigned short count) {
     if (count <= 0) {
@@ -397,7 +467,7 @@ void MyString::replace(const unsigned short index, const unsigned short count, c
             tmp[index + i] = str[i];
         }
 
-        for (unsigned short i = index; i < this->length; ++i) {
+        for (unsigned short i = index; i < (this->length) - count; ++i) {
             tmp[inputLen + i] = this->pstr[count + i];
         }
         tmp[this->length - count + inputLen] = '\0';
@@ -440,6 +510,40 @@ void MyString::replace(const unsigned short index, const unsigned short count1, 
     }
 }
 
+void MyString::replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2) {
+    unsigned short inputLen = MyLength(str);
+
+    if (index1 > this->length) {
+        std::cout << "ERR: not found index(this" << std::endl;
+        exit(1);
+    } else if (count1 > this->length) {
+        std::cout << "ERR: 치환 가능한 길이가, 입력한 길이보다 작습니다(count1" << std::endl;
+        exit(1);
+    } else if (index2 > inputLen) {
+        std::cout << "ERR: not found index(&str" << std::endl;
+        exit(1);
+    } else {
+        char *tmp = new char[this->length - count1 + count2 + 1];
+
+        for (unsigned short i = 0; i < index1; ++i) {
+            tmp[i] = this->pstr[i];
+        }
+
+        for (unsigned short i = 0; i < count2; ++i) {
+            tmp[index1 + i] = str[index2 + i];
+        }
+
+        for (unsigned short i = index1; i < (this->length) - count1; ++i) {
+            tmp[count2 + i] = this->pstr[count1 + i];
+        }
+        tmp[this->length - count1 + count2] = '\0';
+
+        delete [] this->pstr;
+        this->pstr = tmp;
+        this->length = MyLength(this->pstr);
+    }
+}
+
 void MyString::replace(const unsigned short index, const unsigned short count, MyString& str) {
     if (index > this->length) {
         std::cout << "ERR: not found index" << std::endl;
@@ -448,7 +552,7 @@ void MyString::replace(const unsigned short index, const unsigned short count, M
         std::cout << "ERR: 치환 가능한 길이가, 입력한 길이보다 작습니다." << std::endl;
         exit(1);
     } else {
-        unsigned short inputLen = MyLength(str.pstr);
+        unsigned short inputLen = str.length;
         char *tmp = new char[this->length - count + inputLen + 1];
 
         for (unsigned short i = 0; i < index; ++i) {
@@ -459,7 +563,7 @@ void MyString::replace(const unsigned short index, const unsigned short count, M
             tmp[index + i] = str.pstr[i];
         }
 
-        for (unsigned short i = index; i < this->length; ++i) {
+        for (unsigned short i = index; i < (this->length) - count; ++i) {
             tmp[inputLen + i] = this->pstr[count + i];
         }
         tmp[this->length - count + inputLen] = '\0';
@@ -489,10 +593,9 @@ void MyString::replace(const unsigned short index1, const unsigned short count1,
 
         for (unsigned short i = 0; i < count2; ++i) {
             tmp[index1 + i] = *(str.getString() + index2 + i);
-            std::cout << tmp[index1 + i] << std::endl;
         }
 
-        for (unsigned short i = index1; i < this->length; ++i) {
+        for (unsigned short i = index1; i < (this->length) - count1; ++i) {
             tmp[count2 + i] = this->pstr[count1 + i];
         }
         tmp[this->length - count1 + count2] = '\0';
