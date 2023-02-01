@@ -1,27 +1,27 @@
+#ifndef _INCLUDE_
+#define _INCLUDE_
 #include <iostream>
+#include <cstring>
+#endif // _INCLUDE_
 
 class MyString {
-private:
-    unsigned short length;
-    char *pstr = NULL;
-
 public:
     MyString();
-    MyString(const char c);
-    MyString(const char *s);
+    explicit MyString(const char c);
+    explicit MyString(const char *s);
     MyString(const MyString& str);
     virtual ~MyString();
 
-    void setString(char *str);
-    const char* getString();
-    const unsigned short getLength();
+    const void setString(const char *str);
+    const char* getString() const;
+    const unsigned short getLength() const;
 
-    const void print();
-    const void println();
+    void print() const;
+    void println() const;
 
     void clear();
     void reverse();
-    const MyString substr(unsigned short index, short len);
+    const MyString substr(const unsigned short index, const short len);
 
     void insert(const unsigned short index, const char c);
     void insert(const unsigned short index, const unsigned short count, const char c);
@@ -65,4 +65,8 @@ public:
         out << inputPstr.pstr;
         return out;
     }
+
+    private:
+    unsigned short length;
+    char *pstr = nullptr;
 };
