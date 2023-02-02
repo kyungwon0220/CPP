@@ -10,6 +10,7 @@ public:
     explicit MyString(const char c);
     explicit MyString(const char *s);
     MyString(const MyString& str);
+    MyString(MyString&& str);
     virtual ~MyString();
 
     const void setString(const char *str);
@@ -50,11 +51,11 @@ public:
     void assign(const MyString& str);
     void assign(const MyString& str, const unsigned short index, const unsigned short count);
 
-    const short compare(const char* str);
-    const short compare(const MyString& str);
+    const short compare(const char* str) const;
+    const short compare(const MyString& str) const;
 
-    const char at(const unsigned short i);
-    const char operator[] (const unsigned short i);
+    const char at(const unsigned short i) const;
+    const char operator[] (const unsigned short i) const;
 
     MyString& operator=(const char* str);
     MyString& operator=(const MyString& str);

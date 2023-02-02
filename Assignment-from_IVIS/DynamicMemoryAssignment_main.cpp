@@ -57,8 +57,6 @@ int main() {
     std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
     testS1.insert(0, testS4, 5, 4);
     std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
-    std::cout << "len" <<testS1.getLength() <<std::endl;
-    for(int i=0;i<testS1.getLength()+1; i++)std::cout << i << ", "<< testS1[i] << std::endl;
 
 
     std::cout << std::endl << std::endl << "at, [] Test**********" << std::endl;
@@ -128,30 +126,29 @@ int main() {
 
     std::cout << std::endl << std::endl << "substr Test**********" << std::endl;
     testS1 = test4;
-    testS4 = testS1.substr(1000, 10);
+    testS4 = testS1.substr(999, 10);
     testS4.println();
 
 
     std::cout << std::endl << std::endl << "assign Test**********" << std::endl;
-    testS4.assign(5, 'F');
+    testS4.assign(3, 'F');
     std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
     testS4.assign(test1);
     std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
     testS4.assign(test1, 3, 3);
     std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
-    testS4.assign(testS1);
+    testS4.assign(testS2);
     std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
-    testS4.assign(testS1, 3, 4);
+    //testS4.assign(testS1, 3, 4);
     std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
 
 
     std::cout << std::endl << std::endl << "compare Test**********" << std::endl;
-    std::cout << testS4.compare("deQQ") << std::endl;
-    std::cout << testS4.compare("abcdefg") << std::endl;
-    std::cout << testS4.compare("deQR") << std::endl;
-    std::cout << testS4.compare("deQ") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJJK") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJ") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJJ") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJK") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJI") << std::endl;
+    std::cout << testS4.compare("setStringTEST!JJIK") << std::endl;
     std::cout << testS4.compare(testS4) << std::endl;
-    std::cout << testS4.compare(testS1) << std::endl;
-    std::cout << testS4.compare(testS2) << std::endl;
-    std::cout << testS4.compare(testS3) << std::endl;
 }
