@@ -28,8 +28,8 @@ public:
     void insert(const unsigned short index, const unsigned short count, const char c);
     void insert(const unsigned short index, const char* str);
     void insert(const unsigned short index, const unsigned short count, const char* str);
-    void insert(const unsigned short index, MyString& str);
-    void insert(const unsigned short index1, MyString& str, const unsigned short index2, const unsigned short count);
+    void insert(const unsigned short index, const MyString& str);
+    void insert(const unsigned short index1, const MyString& str, const unsigned short index2, const unsigned short count);
 
     void append(const char c, const unsigned short count);
     void append(const char *str);
@@ -42,8 +42,8 @@ public:
     void replace(const unsigned short index, const unsigned short count, const char* str);
     void replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2);
     void replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2);
-    void replace(const unsigned short index, const unsigned short count, MyString& str);
-    void replace(const unsigned short index1, const unsigned short count1, MyString& str, const unsigned short index2, const unsigned short count2);
+    void replace(const unsigned short index, const unsigned short count, const MyString& str);
+    void replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2, const unsigned short count2);
 
     void assign(const unsigned short count, const char c);
     void assign(const char* str);
@@ -67,7 +67,14 @@ public:
         return out;
     }
 
+    MyString& operator=(MyString&& str) {
+        pstr = str.pstr;
+        length = str.length;
+        str.pstr = nullptr;
+        return *this;
+    }
+
     private:
-    unsigned short length;
+    unsigned short length = 0;
     char *pstr = nullptr;
 };
