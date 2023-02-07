@@ -126,8 +126,11 @@ int main() {
 
     std::cout << std::endl << std::endl << "substr Test**********" << std::endl;
     testS1 = test4;
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
     testS4 = testS1.substr(999, 10);
-    testS4.println();
+    std::cout << "test1:" << testS1 << ", len:" << testS1.getLength() << std::endl;
+    std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
 
 
     std::cout << std::endl << std::endl << "assign Test**********" << std::endl;
@@ -151,4 +154,14 @@ int main() {
     std::cout << testS4.compare("setStringTEST!JJI") << std::endl;
     std::cout << testS4.compare("setStringTEST!JJIK") << std::endl;
     std::cout << testS4.compare(testS4) << std::endl;
+
+
+    // std::cout << std::endl << std::endl << "이동 생성자 Test**********" << std::endl;
+    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    // MyString testS5 = std::move(testS4);
+    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    // std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
+    // testS4.append("abc");
+    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    // std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
 }

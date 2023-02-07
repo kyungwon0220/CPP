@@ -1,10 +1,10 @@
 #include "DynamicMemoryAssignment.h"
 
 unsigned short myLength(const char* str) {
-    unsigned short count = 0;
+    unsigned short count;
 
     if (str[0] == '\0') {
-        return count;
+        count = 0;
     } else {   
         while (str[count] != '\0') {
             ++count;
@@ -40,15 +40,17 @@ MyString::MyString(const char *s) : length(myLength(s)) {
 }
 
 MyString::MyString(const MyString& str) : length(myLength(str.pstr)) {
-    char *tmp = new char[length + 1];
+    if ( this != &str) {
+        char *tmp = new char[length + 1];
 
-    for (unsigned short i = 0; i < length; ++i) {
-        tmp[i] = str.pstr[i];
-    }
-    tmp[length] = '\0';
+        for (unsigned short i = 0; i < length; ++i) {
+            tmp[i] = str.pstr[i];
+        }
+        tmp[length] = '\0';
 
-    delete[] pstr;
-    pstr = tmp;
+        delete[] pstr;
+        pstr = tmp;
+    }    
 }
 
 MyString::MyString(MyString&& str) {
@@ -74,13 +76,13 @@ const unsigned short MyString::getLength() const {
     return length;
 }
 
-void MyString::print() const {
+const void MyString::print() const {
     for (unsigned short i = 0; i < length; ++i) {
         std::cout << pstr[i];
     }
 }
 
-void MyString::println() const {
+const void MyString::println() const {
     for (unsigned short i = 0; i < length; ++i) {
         std::cout << pstr[i];
     }
@@ -88,7 +90,7 @@ void MyString::println() const {
     std::cout << std::endl;
 }
 
-void MyString::clear() {
+const void MyString::clear() {
     delete[] pstr;
     
     pstr = new char[1];
@@ -96,14 +98,14 @@ void MyString::clear() {
     length = 0;
 }
 
-void MyString::reverse() {
+const void MyString::reverse() const {
     for (unsigned short i = 0; i < (length / 2); ++i) {
         std::swap(pstr[i], pstr[length - 1 - i]);
     }
 }
 
 
-const MyString MyString::substr(const unsigned short index, const short len = -1) {
+const MyString MyString::substr(const unsigned short index, const short len = -1) const {
     if (index > length) {
         std::cout << "ERR: not found index" << std::endl;
     } else {
@@ -124,11 +126,11 @@ const MyString MyString::substr(const unsigned short index, const short len = -1
     }
 }
 
-void MyString::insert(const unsigned short index, const char c) {
+const void MyString::insert(const unsigned short index, const char c) {
     insert(index, 1, c);
 }
 
-void MyString::insert(const unsigned short index, const unsigned short count, const char c) {
+const void MyString::insert(const unsigned short index, const unsigned short count, const char c) {
     if (index > length) {        
         std::cout << "ERR: not found index" << std::endl;
     } else {
@@ -149,11 +151,11 @@ void MyString::insert(const unsigned short index, const unsigned short count, co
     }
 }
 
-void MyString::insert(const unsigned short index, const char* str) {
+const void MyString::insert(const unsigned short index, const char* str) {
     insert(index, 0, str);
 }
 
-void MyString::insert(const unsigned short index, const unsigned short count, const char* str) {
+const void MyString::insert(const unsigned short index, const unsigned short count, const char* str) {
     if (str[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (index > length) {
@@ -174,11 +176,11 @@ void MyString::insert(const unsigned short index, const unsigned short count, co
     }
 }
 
-void MyString::insert(const unsigned short index, const MyString& str) {
+const void MyString::insert(const unsigned short index, const MyString& str) {
     insert(index, str.pstr);
 }
 
-void MyString::insert(const unsigned short index1, const MyString& str, const unsigned short index2, const unsigned short count) {
+const void MyString::insert(const unsigned short index1, const MyString& str, const unsigned short index2, const unsigned short count) {
     if (str.pstr[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (index1 > length) {
@@ -203,33 +205,19 @@ void MyString::insert(const unsigned short index1, const MyString& str, const un
     }
 }
 
-void MyString::append(const char c, const unsigned short count) {
-    char *tmp = new char[length + count + 1];
-
-    for (unsigned short i = 0; i < length; ++i) {
-        tmp[i] = pstr[i];
-    }
-
-    for (unsigned short i = 0; i < count; ++i) {
-        tmp[length + i] = c;
-    }
-
-    tmp[length + count] = '\0';
-
-    delete[] pstr;
-    pstr = tmp;
-    length += count;
+const void MyString::append(const char c, const unsigned short count) {
+    insert(length, count, c);
 }
 
-void MyString::append(const char *str) {
+const void MyString::append(const char *str) {
     append(str, 0, myLength(str));
 }
 
-void MyString::append(const char *str, const unsigned short count) {
+const void MyString::append(const char *str, const unsigned short count) {
     append(str, 0, count);
 }
 
-void MyString::append(const char *str, const unsigned short index, const unsigned short count) {
+const void MyString::append(const char *str, const unsigned short index, const unsigned short count) {
     if (str[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (count <= 0) {
@@ -256,16 +244,16 @@ void MyString::append(const char *str, const unsigned short index, const unsigne
     }    
 }
 
-void MyString::append(const MyString& str) {
+const void MyString::append(const MyString& str) {
     append(str.pstr, 0, str.length); 
 }
 
-void MyString::append(const MyString& str, const unsigned short index, const unsigned short count) {
+const void MyString::append(const MyString& str, const unsigned short index, const unsigned short count) {
     append(str.pstr, index, count);
 }
 
 
-void MyString::replace(const unsigned short index, const unsigned short count1, const unsigned short count2, const char c) {
+const void MyString::replace(const unsigned short index, const unsigned short count1, const unsigned short count2, const char c) {
     if (index > length) {
         std::cout << "ERR: not found index" << std::endl;
     } else if (count1 > length) {
@@ -292,15 +280,15 @@ void MyString::replace(const unsigned short index, const unsigned short count1, 
     }
 }
 
-void MyString::replace(const unsigned short index, const unsigned short count, const char* str) {
+const void MyString::replace(const unsigned short index, const unsigned short count, const char* str) {
     replace(index, count, str, 0, myLength(str));
 }
 
-void MyString::replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2) {
+const void MyString::replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2) {
     replace(index, count1, str, 0, count2);
 }
 
-void MyString::replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2) {
+const void MyString::replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2) {
     if (str[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (index1 > length) {
@@ -333,16 +321,16 @@ void MyString::replace(const unsigned short index1, const unsigned short count1,
     }
 }
 
-void MyString::replace(const unsigned short index, const unsigned short count, const MyString& str) {
+const void MyString::replace(const unsigned short index, const unsigned short count, const MyString& str) {
     replace(index, count, str.pstr, 0, str.length);
 }
 
-void MyString::replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2, const unsigned short count2) {
+const void MyString::replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2, const unsigned short count2) {
     replace(index1, count1, str.pstr, index2, count2);
 }
 
 
-void MyString::assign(const unsigned short count, const char c) {
+const void MyString::assign(const unsigned short count, const char c) {
     char* tmp = new char[count + 1];
 
     memset(tmp, c, (sizeof(char) * count));
@@ -353,14 +341,13 @@ void MyString::assign(const unsigned short count, const char c) {
     length = count;
 }
 
-void MyString::assign(const char* str) {
+const void MyString::assign(const char* str) {
     assign(str, 0, myLength(str));
 }
 
-void MyString::assign(const char* str, const unsigned short index, const unsigned short count) {
+const void MyString::assign(const char* str, const unsigned short index, const unsigned short count) {
     if (str == nullptr) {
-        pstr = nullptr;
-        length = 0;
+        clear();
     } else {
         char* tmp = new char[count + 1];
         
@@ -375,11 +362,11 @@ void MyString::assign(const char* str, const unsigned short index, const unsigne
     }    
 }
 
-void MyString::assign(const MyString& str) {
+const void MyString::assign(const MyString& str) {
     assign(str.pstr, 0, str.length);
 }
 
-void MyString::assign(const MyString& str, const unsigned short index, const unsigned short count) {
+const void MyString::assign(const MyString& str, const unsigned short index, const unsigned short count) {
     assign(str.pstr, index, count);
 }
 
@@ -387,35 +374,32 @@ void MyString::assign(const MyString& str, const unsigned short index, const uns
 const short MyString::compare(const char* str) const {
     short tmp = 0;
 
-    if (str == nullptr) {
+    if (pstr == nullptr) {
+        std::cout << "ERR: NULL (this->pstr == nullptr" << std::endl;
+    } else if (str == nullptr) {
         std::cout << "ERR: request NULL" << std::endl;
     } else {        
-        unsigned short inputLen = myLength(str);
-        unsigned short loop = (length  >= inputLen) ? inputLen : length;
+        unsigned short i = 0;
 
-        for (unsigned short i = 0; i < loop; ++i) {
-            if ((0 == pstr[i]) || (0 == str[i])) {
-                if (pstr[i] == str[i]) {
+        do {
+            if ((pstr[i] == '\0') || (str[i] == '\0')) {
+            if (pstr[i] == str[i]) {
                 tmp = 0;
-                } else {
-                tmp = ((0 == pstr[i]) ? 1 : -1);
-                }
-                break;
-            } else if (pstr[i] > str[i]) {
-                tmp = 1;
-                break;
-            } else if (this->pstr[i] < str[i]) {
-                tmp = -1;
-                break;
+            } else {
+                tmp = (('\0' == pstr[i]) ? -1 : 1);
             }
+            break;
+        } else if (pstr[i] > str[i]) {
+            tmp = 1;
+            break;
+        } else if (pstr[i] < str[i]) {
+            tmp = -1;
+            break;
         }
 
-        if ((tmp == 0) && (length < inputLen)) {
-            tmp = -1;
-        } else if ((tmp == 0) && (length > inputLen)) {
-            tmp = 1;
-        }
-    }    
+        ++i;
+        } while (i);        
+    }
 
     return tmp;
 }
@@ -426,7 +410,7 @@ const short MyString::compare(const MyString& str) const {
 }
 
 const char MyString::at(const unsigned short i) const {
-    char tmp = 0;
+    char tmp = '\0';
     
     if (length > i) {
         tmp = pstr[i];
@@ -439,23 +423,23 @@ const char MyString::operator[] (const unsigned short i) const {
     at(i);
 }
 
-MyString& MyString::operator=(const char* str) {
+const MyString& MyString::operator=(const char* str) {
     assign(str, 0, myLength(str));
     
     return *this;
 }
 
-MyString& MyString::operator=(const MyString& str) {
+const MyString& MyString::operator=(const MyString& str) {
     operator=(str.pstr);
     return *this;
 }
 
-MyString& MyString::operator+=(const char *str) {
+const MyString& MyString::operator+=(const char *str) {
     append(str, 0, myLength(str));
     return *this;
 }
 
-MyString& MyString::operator+=(const MyString& str) {
+const MyString& MyString::operator+=(const MyString& str) {
     append(str.pstr, 0, str.length);
     return *this;
 }
