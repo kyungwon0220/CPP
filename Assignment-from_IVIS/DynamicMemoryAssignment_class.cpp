@@ -56,7 +56,10 @@ MyString::MyString(const MyString& str) : length(myLength(str.pstr)) {
 MyString::MyString(MyString&& str) {
     length = str.length;
     pstr = str.pstr;
-    str.pstr = nullptr;
+    
+    str.pstr = new char[1];
+    str.pstr[0] = '\0';
+    str.length = 0;
 }
 
 MyString::~MyString() {

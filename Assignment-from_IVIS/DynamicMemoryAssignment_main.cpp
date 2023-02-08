@@ -156,12 +156,12 @@ int main() {
     std::cout << testS4.compare(testS4) << std::endl;
 
 
-    // std::cout << std::endl << std::endl << "이동 생성자 Test**********" << std::endl;
-    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
-    // MyString testS5 = std::move(testS4);
-    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
-    // std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
-    // testS4.append("abc");
-    // std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
-    // std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
+    std::cout << std::endl << std::endl << "이동 생성자 Test**********" << std::endl;
+    std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    MyString testS5 = std::move(testS4);
+    std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
+    testS4.append("abc");
+    std::cout << "test4:" << testS4 << ", len:" << testS4.getLength() << std::endl;
+    std::cout << "test5:" << testS5 << ", len:" << testS5.getLength() << std::endl;
 }
