@@ -40,7 +40,7 @@ MyString::MyString(const char *s) : length(myLength(s)) {
 }
 
 MyString::MyString(const MyString& str) : length(myLength(str.pstr)) {
-    if ( this != &str) {
+    if (this != &str) {
         char *tmp = new char[length + 1];
 
         for (unsigned short i = 0; i < length; ++i) {
@@ -65,6 +65,7 @@ MyString::MyString(MyString&& str) {
 MyString::~MyString() {
     delete[] pstr;
     pstr = nullptr;
+    length = 0;
 }
 
 const void MyString::setString(const char* str) {
@@ -108,11 +109,11 @@ const void MyString::reverse() const {
 }
 
 
-const MyString MyString::substr(const unsigned short index, const short len = -1) const {
+const MyString MyString::substr(const unsigned short index, const short len = -1) const { 
     if (index > length) {
-        std::cout << "ERR: not found index" << std::endl;
+        throw std::out_of_range("ERR: not found index");
     } else {
-        MyString tmp;
+        MyString tmp(pstr);
         unsigned short tmpLen = (len == -1) ? length : len;
 
         char* temp = new char[tmpLen + 1];
@@ -126,8 +127,9 @@ const MyString MyString::substr(const unsigned short index, const short len = -1
         tmp.length = tmpLen;
 
         return tmp;
-    }
+    }   
 }
+
 
 const void MyString::insert(const unsigned short index, const char c) {
     insert(index, 1, c);
@@ -135,7 +137,7 @@ const void MyString::insert(const unsigned short index, const char c) {
 
 const void MyString::insert(const unsigned short index, const unsigned short count, const char c) {
     if (index > length) {        
-        std::cout << "ERR: not found index" << std::endl;
+        throw std::out_of_range("ERR: not found index");
     } else {
         char *tmp = new char[length + count + 1];
 
@@ -183,7 +185,8 @@ const void MyString::insert(const unsigned short index, const MyString& str) {
     insert(index, str.pstr);
 }
 
-const void MyString::insert(const unsigned short index1, const MyString& str, const unsigned short index2, const unsigned short count) {
+const void MyString::insert(const unsigned short index1, const MyString& str, const unsigned short index2,
+                            const unsigned short count) {
     if (str.pstr[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (index1 > length) {
@@ -226,7 +229,8 @@ const void MyString::append(const char *str, const unsigned short index, const u
     } else if (count <= 0) {
         std::cout << "ERR: need to ' count ' > 0" << std::endl;
     } else if (count > myLength(str)) {
-        std::cout << "ERR: ' Count ' Over ( 추가를 원하는 문자열의 길이가, 추가를 위해 주어진 문자열의 길이보다 큽니다" << std::endl;
+        std::cout << "ERR: ' Count ' Over ( 추가를 원하는 문자열의 길이가, 추가를 위해 주어진 문자열의 길이보다 큽니다"
+                  << std::endl;
     } else if (index > myLength(str)) {
         std::cout << "ERR: not found index" << std::endl;
     } else {
@@ -287,11 +291,13 @@ const void MyString::replace(const unsigned short index, const unsigned short co
     replace(index, count, str, 0, myLength(str));
 }
 
-const void MyString::replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2) {
+const void MyString::replace(const unsigned short index, const unsigned short count1, const char* str,
+                             const unsigned short count2) {
     replace(index, count1, str, 0, count2);
 }
 
-const void MyString::replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2) {
+const void MyString::replace(const unsigned short index1, const unsigned short count1, const char* str,
+                             const unsigned short index2, const unsigned short count2) {
     if (str[0] == '\0') {
         std::cout << "ERR: request NULL" << std::endl;
     } else if (index1 > length) {
@@ -328,7 +334,8 @@ const void MyString::replace(const unsigned short index, const unsigned short co
     replace(index, count, str.pstr, 0, str.length);
 }
 
-const void MyString::replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2, const unsigned short count2) {
+const void MyString::replace(const unsigned short index1, const unsigned short count1, const MyString& str,
+                             const unsigned short index2, const unsigned short count2) {
     replace(index1, count1, str.pstr, index2, count2);
 }
 
@@ -423,7 +430,7 @@ const char MyString::at(const unsigned short i) const {
 }
 
 const char MyString::operator[] (const unsigned short i) const {
-    at(i);
+    return at(i);
 }
 
 const MyString& MyString::operator=(const char* str) {

@@ -1,8 +1,8 @@
 #ifndef _INCLUDE_
 #define _INCLUDE_
+
 #include <iostream>
 #include <cstring>
-#endif // _INCLUDE_
 
 class MyString {
 public:
@@ -41,9 +41,11 @@ public:
     const void replace(const unsigned short index, const unsigned short count1, const unsigned short count2, const char c);
     const void replace(const unsigned short index, const unsigned short count, const char* str);
     const void replace(const unsigned short index, const unsigned short count1, const char* str, const unsigned short count2);
-    const void replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2, const unsigned short count2);
+    const void replace(const unsigned short index1, const unsigned short count1, const char* str, const unsigned short index2,
+                       const unsigned short count2);
     const void replace(const unsigned short index, const unsigned short count, const MyString& str);
-    const void replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2, const unsigned short count2);
+    const void replace(const unsigned short index1, const unsigned short count1, const MyString& str, const unsigned short index2,
+                       const unsigned short count2);
 
     const void assign(const unsigned short count, const char c);
     const void assign(const char* str);
@@ -78,3 +80,5 @@ public:
     unsigned short length = 0;
     char *pstr = nullptr;
 };
+
+#endif  // _INCLUDE_
