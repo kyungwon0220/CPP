@@ -1,30 +1,69 @@
 #include "응용예제05.h"
 
-void Stack::push(const short data) {
-    StackNode* newNode = new StackNode;
-    
-    newNode->data = data;
-    newNode->prev = top;
-    top = newNode;
-    ++count;
+const unsigned short StackNode::getData() const {
+    return m_data;
 }
 
-short Stack::pop() {
-    StackNode* tmp = top;
-    short item = tmp->data;
-    
-    top = top->prev;
-    delete tmp;
-    --count;
-
-    return item;
+StackNode* StackNode::getPrev() const {
+    return prev;
 }
 
-const unsigned short Stack::getCount() const {
-    return count;
+
+const bool Stack::isEmpty() const {
+    bool tmp;
+
+    if (top == nullptr) {
+        tmp = true;
+    } else {
+        tmp = false;
+    }
+
+    return tmp;
 }
 
-void Stack::setScore(const unsigned short score) {
+const void Stack::push(const short data) {
+    if ((isEmpty() == false) && (top->m_data == data)) {  // 맨 위 구슬 번호가 새 구슬 번호와 같다면
+        pop();
+    } else if (data == 0) {
+    } else {
+        StackNode* newNode = new StackNode;
+        
+        newNode->m_data = data;
+        newNode->prev = top;
+        top = newNode;
+        ++nodeIndexCount;
+
+        if (data != 0) {
+            ++count;
+        }
+    }
+}
+
+const unsigned short Stack::pop() {
+    if (isEmpty() == false) {
+        StackNode* tmp = top;
+        short item = top->m_data;
+
+        if (tmp->m_data != 0) {
+            --count;
+        }
+
+        top = top->prev;
+        delete tmp;
+        tmp->prev = nullptr;
+        --nodeIndexCount;
+
+        return item;
+    } else {
+        throw std::out_of_range("ERR : not allowed ' pop() '; ( This Stack is NULL.\n");
+    }
+}
+
+StackNode* Stack::getTop() const {
+    return top;
+}
+
+const void Stack::setScore(const unsigned short score) {
     m_score = score;
 }
 
@@ -32,78 +71,75 @@ const unsigned short Stack::getScore() const {
     return m_score;
 }
 
+const unsigned short Stack::getCount() const {
+    return count;
+}
+
+const unsigned short Stack::getNodeIndexCount() const {
+    return nodeIndexCount;
+}
+
 
 void Game::gameStart() {
-    unsigned short pinNum, data; // 초기 추가 세팅
+    unsigned short pinNum, data;
 
     pinSet();
     scoreSet();
-    printAll(); // debug
-    
-    for(unsigned short i=0; i<15; ++i) {
-        std::cout << "input : ( 구슬의 값 X ) ( 구슬이 들어갈 번호 Y ) 입력 : ( ex : X Y )";
-        std::cin >> pinNum >> data;
-        pinPush(pinNum, data);
+    printAll();
+    for (unsigned short i = 0; i < 10; ++i) {
+        std::cout << "( 구슬의 값 X ) ( 구슬이 들어갈 번호 Y ) 입력 ( ex : X Y ) : ";
+        std::cin >> data >> pinNum;
+        pinPush(data, pinNum);
     }
-
-    printAll(); // debug
+    printAll();
 }
 
-// const unsigned short Game::MaxCouning() const {
-//     unsigned short maxCount =stack[0].getCount(); // 생성된 스택 中 가장 많은 data 가진 개수
+const void Game::printAll() const {
+    for (unsigned short i = 0; i < stackCount; ++i) {
+        StackNode* horse = stack[i].getTop();
+        unsigned int sum = 0;
 
-//     for (unsigned i=0; i<stackCount; ++i) {
-//         if (maxCount < stack[i].getCount()) {
-//             maxCount = stack[i].getCount();
-//         }                
-//     }
+        std::cout << std::endl << "stack[" << i+1 << "] ";
+        std::cout << "Count : " << stack[i].getCount();        
+        std::cout << ", IndexCount : " << stack[i].getNodeIndexCount();
+        std::cout << ", score : " << stack[i].getScore() << std::endl;
 
-//     return maxCount;
-// }
-
-const void Game::printAll() const {    
-    unsigned short tmp = stack[stackCount - 1].getCount(); // 
-
-    std::cout << std::endl;
-    for (unsigned short i=0; i<tmp; ++i) {
-        for (unsigned short j=0; j<stackCount; ++j) {
-            std::cout << stack[j].pop() << "\t\t";
+        while (horse != nullptr) {
+            sum += horse->getData();
+            std::cout << horse->getData() << ", ";
+            horse = horse->getPrev();
         }
-        std::cout << std::endl;
+
+        std::cout << "\tstack[" << i+1 << "] Fanal score = " << sum * stack[i].getScore() << std::endl;
     }
-    for (unsigned short i=0; i<stackCount; ++i){        
-        std::cout << "stack[" << i+1 << "]\t";
-    }
-    std::cout << std::endl;
-    for (unsigned short i=0; i<stackCount; ++i){        
-        std::cout << "count : " << stack[i%stackCount].getScore() << "\t";
-    }
-    std::cout << std::endl;
 }
 
-void Game::pinSet() {
-    short tmp;
-
-    std::cout << "게임 시작 상태 : ";
-
-    for (unsigned short i=0; i<stackCount*3; ++i) {        
-        std::cin >> tmp;
-        
-        stack[i%stackCount].push(tmp);
-    } // for end
+const void Game::pinPush(const unsigned short data, const unsigned short pinNum) const {
+    stack[pinNum - 1].push(data);
 }
 
-void Game::scoreSet() {
-    std::cout << "각 세로 칸의 점수 : ";
-
+const void Game::scoreSet() const {
     unsigned short scoreTmp;
-    for (unsigned short i=0; i<stackCount; ++i) {
+
+    std::cout << "각 세로 칸의 점수 " << stackCount << "개 입력 : ";
+    
+    for (unsigned short i = 0; i < stackCount; ++i) {
         std::cin >> scoreTmp;
 
         stack[i%stackCount].setScore(scoreTmp);
-    } // for end
+    }
 }
 
-void Game::pinPush(unsigned short pinNum, unsigned short data) {
-    stack[pinNum - 1].push(data);
+void Game::pinSet() {
+    short tmp[15];
+
+    std::cout << "게임 시작 상태(세 줄의 구슬 목록) : ";
+
+    for (unsigned short i = 0; i < stackCount*3; ++i) {        
+        std::cin >> tmp[(stackCount*3) - 1 - i];
+    }
+
+    for (unsigned short i = 0; i < stackCount*3; ++i) {        
+        stack[stackCount - (i%stackCount) - 1].push(tmp[i]);
+    }
 }
