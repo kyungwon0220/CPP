@@ -34,6 +34,12 @@
 - 임계값 체킹
 
 
+- NULL 체킹
+
+
+- ERR Log
+
+
 - class Test {
   public:
       Test() {}
@@ -59,7 +65,7 @@
 - 2회 이상 재사용시 함수화
 
 
-- ERR Log
+- 중복 구현 제거(가능한 함수 재사용)
 
 
 - int main() { return 0; }

@@ -23,22 +23,22 @@
 
 
 다양한 인자를 받아, 편하게 사용하기 위해 추가로 구현해 보았습니다.
-- void MyString::insert(const unsigned short index, const char c);
+- const void MyString::append(const char *str, const unsigned short index, const unsigned short count)
 
-- void append(const char *str, const unsigned short index, const unsigned short count);
+- const void MyString::assign(const unsigned short count, const char c)
 
-- void assign(const unsigned short count, const char c);
+- const void MyString::assign(const char* str, const unsigned short index, const unsigned short count)
 
-- void assign(const char* str, const unsigned short index, const unsigned short count);
+- const void MyString::assign(const MyString& str, const unsigned short index, const unsigned short count)
 
-- void assign(const MyString& str, const unsigned short index, const unsigned short count);
+- const short compare(const char* str) const;
 
 
-필요시 구현할 예정 Memo
+
+
+필요시 구현할 예정 함수 목록
 - const short compare(const char* str, const unsigned short index, const unsigned short len);
 
 - const short compare(const MyString& str, const unsigned short index, const unsigned short len);
 
-- MyString& operator+(const char* str);
-
-- MyString& operator+(const MyString& str);
+- friend std::istream& operator>>(std::istream& in, MyString& inputPstr);

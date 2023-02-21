@@ -127,7 +127,7 @@ const MyString MyString::substr(const unsigned short index, const short len = -1
         tmp.length = tmpLen;
 
         return tmp;
-    }   
+    }
 }
 
 
@@ -136,7 +136,9 @@ const void MyString::insert(const unsigned short index, const char c) {
 }
 
 const void MyString::insert(const unsigned short index, const unsigned short count, const char c) {
-    if (index > length) {        
+    if (c == '\0') {
+        throw std::out_of_range("ERR: request NULL");
+    } else if (index > length) {
         throw std::out_of_range("ERR: not found index");
     } else {
         char *tmp = new char[length + count + 1];
