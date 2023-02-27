@@ -34,10 +34,16 @@ const void Queue::enQueue(const size_t& data) {
 }
 
 const size_t Queue::deQueue() {
-    size_t tmp = m_data[front];
+    size_t tmp = '\0';
 
-    m_data[front] = '\0';
-    front = (front+1)%m_qSize;
+    if (isEmpty()) {
+        std::cout << "Circular Queue is empty!" << std::endl;
+    } else {
+       tmp = m_data[front];
+
+        m_data[front] = '\0';
+        front = (front+1)%m_qSize;        
+    }
 
     return tmp;
 }
@@ -48,7 +54,8 @@ const void Queue::printQ() const {
     unsigned short loop = f;
 
     while (loop != l) {
-        std::cout << "now front : " << front << ", rear : " << rear << ", data : " << m_data[loop] << std::endl;
+        std::cout << "now front : " << front << ", rear : " << rear << ", loop : " << loop << ", data : " << m_data[loop]
+                  << std::endl;
         loop = (loop+1)%m_qSize;
     }
     std::cout << std::endl;

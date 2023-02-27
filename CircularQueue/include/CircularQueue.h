@@ -11,11 +11,10 @@ public:
     const size_t deQueue();
     const void printQ() const;
     const size_t pickQ(const unsigned short i) const;
-    unsigned short front = 0;
-    unsigned short rear = 0;
-
-    
 private:
     size_t m_qSize;
-    size_t* m_data;    
+    size_t* m_data;
+
+    unsigned short front = 0;
+    unsigned short rear = 0;
 };
