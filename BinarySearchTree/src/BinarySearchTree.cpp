@@ -1,5 +1,15 @@
 #include "BinarySearchTree.h"
 
+const void Node::inorder(const Node* root) const {  // 이진 탐색 트리를 중위 순회하면서 출력하는 연산
+    if (root) {
+        inorder(root->left);
+        if (root->m_key != '\0') {
+            std::cout << root->m_key << "_";
+        }        
+        inorder(root->right);
+    }
+}
+
 Node* Node::insert(Node* root, const char key) const {  // 포인터 root가 가리키는 노드와 비교하여 노드 key를 삽입하는 연산
     Node* tmp = root;
 
@@ -35,8 +45,8 @@ const void Node::delNode(Node* root, const char key) const {  // 루트 노드�
     if (horse == nullptr) {  // 삭제할 노드가 없는 경우
         std::cout << std::endl << "찾는 키가 이진 트리에 없습니다!" << std::endl;
     } else if ((horse->left == nullptr) && (horse->right == nullptr)) {  // 삭제할 노드가 단말 노드인 경우
-        if (parent == nullptr) {  // 삭제할 노드에 부모 노드가 없으면, 삭제하는 노드가 이진 탐색 트리의 하나뿐인 노드이므로
-            horse = nullptr;
+        if (parent == nullptr) {  // 삭제할 노드에 부모 노드까지 없으면, 삭제하는 노드가 이진 탐색 트리의 하나뿐인 노드이므로
+            root->m_key = '\0';
         } else {
             if (parent->left == horse) {
                 parent->left = nullptr;
@@ -83,12 +93,4 @@ const void Node::delNode(Node* root, const char key) const {  // 루트 노드�
 
     delete horse;
     horse = nullptr;
-}
-
-const void Node::inorder(const Node* root) const {  // 이진 탐색 트리를 중위 순회하면서 출력하는 연산
-    if (root) {
-        inorder(root->left);
-        std::cout << root->m_key << "_";
-        inorder(root->right);
-    }
 }

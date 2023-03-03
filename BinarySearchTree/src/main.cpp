@@ -20,14 +20,15 @@ int main() {
     root->insert(root, 'O');
     root->insert(root, 'P');
 
-    root->insert(root, 'Q');
+    std::cout << std::endl;
     root->inorder(root);
-    
-    root->delNode(root, 'H');
+    root->insert(root, 'Q');
+
+    root->delNode(root, 'P');
     std::cout << std::endl;
     root->inorder(root);
     
-    root->delNode(root, 'H');
+    root->delNode(root, 'P');
     std::cout << std::endl;
     root->inorder(root);
 }
