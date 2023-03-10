@@ -11,20 +11,21 @@ const void MyGraph::insertV(const unsigned short v) {
     }
 }
 
-const void MyGraph::insertEdge(unsigned short v1, const unsigned short v2) {
+const void MyGraph::insertEdge(unsigned short v1, const unsigned short v2) const {
     if (v1 >= n || v2 >= n) {
         std::cout << "ERR : 그래프에 없는 정점입니다!" << std::endl;
     } else {
         Node* newNode = new Node;
+        
         newNode->vertex = v2;
-        newNode->link = (adjMatrix+v1)->link;
-        (adjMatrix+v1)->link = newNode;
+        newNode->link = adjList[v1].link;
+        adjList[v1].link = newNode;
     }
 }
 
-const void MyGraph::printList() {
+const void MyGraph::printList() const {
     for (unsigned short i = 0; i < n; ++i) {
-        Node* horse = (adjMatrix+i)->link;  // 최초 헤드의 vertex == NULL 이므로, 헤드 노드의 link부터 출력
+        Node* horse = (adjMatrix+i)->link;  // 최초 헤드의 vertex == '\0' 이므로, 헤드 노드의 link 노드부터 출력
         
         std::cout << "정점 " << (char)(i + 'A') << " 의 인접 리스트";  // 인덱스 숫자인 정점을, 알파벳으로 출력
 
